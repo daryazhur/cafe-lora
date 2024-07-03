@@ -12,19 +12,6 @@ import { Footer } from '../components/Footer';
 const response = await fetch('http://localhost:4000/api/drinks')
 const { data: drinks } = await response.json()
 
-document.querySelector('#root').innerHTML = render(
-  <div className="page">
-    < Header />
-    <main>
-      < Banner />
-      < Menu drinks={drinks} />
-      < Gallery />
-      < Contact />
-    </main>
-    < Footer />
-  </div>
-);
-
 document.addEventListener('DOMContentLoaded', () => {
   const navBtn = document.querySelector('.nav-btn')
   const rolloutNav = document.querySelector('.rollout-nav')
@@ -39,3 +26,37 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   })
 })
+
+document.querySelector('#root').innerHTML = render(
+  <div className="page">
+    < Header />
+    <main>
+      < Banner />
+      < Menu drinks={drinks} />
+      < Gallery />
+      < Contact />
+    </main>
+    < Footer />
+  </div>
+);
+
+const orderButtons = document.querySelectorAll('.order-btn')
+orderButtons.forEach((btn) => {
+  btn.addEventListener('click', async e => {
+    // e.preventDefault()
+    const id = e.target.dataset.id
+    console.log(id)
+    // await fetch(`http://localhost:4000/api/drinks/${id}`), {
+    //     method: "PATCH",
+    //     headers: {
+    //       "Content-Type": "application/json"
+    //       },
+    //     body: JSON.stringify([{ op: 'replace', path: '/ordered', value: true }])
+    //   }
+  })
+
+  // window.location.reload()
+})
+
+
+

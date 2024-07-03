@@ -14,8 +14,9 @@ export const Menu = () => {
                 </p>
                 <div className="drinks-list">
                     {
-                        list.map((drink) => (
+                        list.map((drink, index) => (
                             < Drink 
+                                key={index}
                                 id={drink.id}
                                 name={drink.name}
                                 ordered={drink.ordered}
