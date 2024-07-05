@@ -13,7 +13,7 @@ export const Order = ( { items } ) => {
                 < OrderItem 
                     key={item.id}
                     name={item.name}
-                    image={item.image}
+                    image={`http://localhost:4000${item.image}`}
                 />
             ))}
         </div>

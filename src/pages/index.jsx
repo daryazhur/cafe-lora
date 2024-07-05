@@ -40,23 +40,32 @@ document.querySelector('#root').innerHTML = render(
   </div>
 );
 
-const orderButtons = document.querySelectorAll('.order-btn')
-orderButtons.forEach((btn) => {
-  btn.addEventListener('click', async e => {
-    // e.preventDefault()
-    const id = e.target.dataset.id
-    console.log(id)
-    // await fetch(`http://localhost:4000/api/drinks/${id}`), {
-    //     method: "PATCH",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //       },
-    //     body: JSON.stringify([{ op: 'replace', path: '/ordered', value: true }])
-    //   }
-  })
 
-  // window.location.reload()
-})
+const orderForms = document.querySelectorAll(".drink__controls");
+orderForms.forEach((form) => {
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const id = form.querySelector(".order-id").value;
+    const currentOrdered = form.getAttribute('data-ordered') === 'true';
+    
+    //console.log("Order button clicked", id);
+
+    await fetch(`http://localhost:4000/api/drinks/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([
+        { op: "replace", path: "/ordered", value: !currentOrdered },
+      ]),
+    });
+
+    const button = form.querySelector('button');
+      form.setAttribute('data-ordered', !currentOrdered);
+      button.className = !currentOrdered ? 'order-btn order-btn--ordered' : 'order-btn';
+      button.textContent = currentOrdered ? 'Objednat' : 'Zrušit';
+  });
+});
 
 
 
